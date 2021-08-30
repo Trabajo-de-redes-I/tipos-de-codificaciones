@@ -2,21 +2,34 @@
 #include <cstdlib>
 #include <windows.h>
 #include <ctime>
-
+#include<iomanip>
 using namespace std;
 
 
-void tablero1(){
-	int i=0,j=0;
-	char mat[2][12];
-	int vec[12]={0,1,1,0,0,1,0,1,0,1,1,0};
+
+void llenarvec(int *vec){
 	
-	srand(time(NULL));
-	for(int i=0; i<2; i++){
-		for(int j=0; j<12; j++){
-			mat[i][j]='*';
-		}
+	
+	for(int i=0;i<12;i++){
+		
+		
+		vec[i]=0+rand()%(1-0+1);
+		
+		
 	}
+	
+
+	
+	
+	
+}
+
+
+
+
+void tablero1(char **mat,int *vec){
+	int i=0,j=0;
+
 	
 	cout<<"\t\t\t______________________________________________________________________________\n";
 	cout<<"\t\t\t|     |     |     |     |     |     |     |     |     |     |     |     |     |\n";
@@ -30,18 +43,10 @@ void tablero1(){
 	cout<<"\t\t\t|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|\n";
 }
 
-void tablero2(){
+void tablero2(char **mat,int *vec){
 	int i=0,j=0;
-	char mat[3][12];
-	int vec[12]={0,1,1,0,0,1,0,1,0,1,1,0};
-	
-	srand(time(NULL));
-	for(int i=0; i<3; i++){
-		for(int j=0; j<12; j++){
-			mat[i][j]='*';
-		}
-	}
-	
+	  
+
 	cout<<"\t\t\t______________________________________________________________________________\n";
 	cout<<"\t\t\t|     |     |     |     |     |     |     |     |     |     |     |     |     |\n";
 	cout<<"\t\t\t|     |  "<<vec[0]<<"  |  "<<vec[1]<<"  |  "<<vec[2]<<"  |  "<<vec[3]<<"  |  "<<vec[4]<<"  |  "<<vec[5]<<"  |  "<<vec[6]<<"  |  "<<vec[7]<<"  |  "<<vec[8]<<"  |  "<<vec[9]<<"  |  "<<vec[10]<<"  |  "<<vec[11]<<"  |\n";
@@ -57,12 +62,155 @@ void tablero2(){
 	cout<<"\t\t\t|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|_____|\n";
 }
 
+void no_retorno_cero(){
+	int vec[12];
+	char **mat;
+	mat=(char**)calloc(2,sizeof(char));
+	for(int i=0;i<2;i++){
+		
+		mat[i]=(char*)calloc(12,sizeof(char));
+		
+	}
+	
+	llenarvec(vec);
+	
+	for(int i=0;i<12;i++){
+		if(vec[i]==0){
+			mat[1][i]='*';
+			mat[0][i]=' ';
+		}else{
+			mat[0][i]='*';
+			mat[1][i]=' ';
+		}
+		
+		
+	}
+	tablero1(mat,vec);
+	
+	
+	
+}
 
+void bipolar_AMI(){
+	bool band=true;
+	int vec[12];
+	char **mat;
+	mat=(char**)calloc(3,sizeof(char));
+	for(int i=0;i<3;i++){
+		
+		mat[i]=(char*)calloc(12,sizeof(char));
+		
+	}
+	llenarvec(vec);
+	
+	for(int i=0;i<12;i++){
+		
+		if(vec[i]==0){
+			mat[0][i]=' ';
+			mat[1][i]='*';
+			mat[2][i]=' ';
+			
+		}else if(band){
+			mat[0][i]='*';
+			mat[1][i]=' ';
+			mat[2][i]=' ';
+			band=false;
+			
+		}else{
+			mat[0][i]=' ';
+			mat[1][i]=' ';
+			mat[2][i]='*';
+			band=true;
+		}
+		
+		
+		
+	}
+	
+	
+	tablero2(mat,vec);
+	
+	
+	
+}
+
+void menu(){
+	
+	int op;
+	
+	
+	
+	do{
+		system("cls");
+		cout<<right<<setw(50)<<"MENU(Tipos de codificaciones)"<<endl;
+		cout.width(48);cout.fill(' ');
+		cout<<"[1]No retorno a cero(NRC-L)"<<endl;
+		cout.width(58);cout.fill(' ');
+		cout<<"[2]No retorno a cero invertido(NRZ-I)"<<endl;
+		cout.width(35);cout.fill(' ');
+		cout<<"[3]Bipolar AMI"<<endl;
+		cout.width(38);cout.fill(' ');
+		cout<<"[4]Pseudoternario"<<endl;
+		cout.width(34);cout.fill(' ');
+		cout<<"[5]Manchester"<<endl;
+		cout.width(42);cout.fill(' ');
+		cout<<"[6]Codigo diferencial"<<endl;
+		cout.width(29);cout.fill(' ');
+		cout<<"[7]Salir"<<endl;
+		cout.width(39);cout.fill(' ');
+		cout<<"Elige una opcion: ";
+		cin>>op;
+		system("cls");
+		switch(op){
+			case 1:
+				cout<<right<<setw(80)<<"Codificacion no retorno a cero(NRZ-L)"<<endl<<endl;
+				no_retorno_cero();
+				break;
+			case 2:
+			
+				break;
+			case 3:
+				cout<<right<<setw(70)<<"Codificacion Bipolar AMI"<<endl<<endl;
+				bipolar_AMI();
+				break;
+			case 4:
+			
+				break;
+			case 5:
+				break;
+			case 6:
+				
+				break;
+			case 7:
+				cout<<"Saliendo..."<<endl;
+				break;
+			default:
+				cout<<"Error, opcion invalida.Intenta de nuevo"<<endl;
+				break;
+			
+			
+			
+		}
+		cout<<endl;
+		system("pause");
+		
+	}while(op!=7);
+	
+	
+	
+	
+	
+	
+	
+}
 int main(){
-	//inicio del programa
-	tablero1();
-	cout<<endl<<endl;
-	tablero2();
+	srand(time(NULL));
+	//inicio del program
+    menu();
+	
+//	bipolar_AMI();
+	//cout<<endl<<endl;
+	//tablero2();
 	cout<<endl<<endl;
 	system("pause");
 	return 0;
