@@ -9,18 +9,11 @@ using namespace std;
 
 void llenarvec(int *vec){
 	
-	
 	for(int i=0;i<12;i++){
-		
-		
+	
 		vec[i]=0+rand()%(1-0+1);
 		
-		
 	}
-	
-
-	
-	
 	
 }
 
@@ -91,6 +84,54 @@ void no_retorno_cero(){
 	
 }
 
+void no_retorno_cero_invertido(){
+	int vec[12];
+	bool band=true, inicio=true;
+	char **mat=(char**)calloc(2,sizeof(char));
+	for(int i=0;i<2;i++){
+		mat[i]=(char*)calloc(12,sizeof(char));	
+	}
+	
+	llenarvec(vec);
+	
+	for(int i=0;i<12;i++){
+		if(inicio){//solo al inicio de hacer la señal 
+			if(vec[i]==1){
+				mat[0][0]='*';
+				mat[1][0]=' ';
+				band=true;//empezo el pulso en 1
+			}else{
+				mat[0][0]=' ';
+				mat[1][0]='*';
+				band=false;//empezo el pulso en 0
+			}
+			inicio=false;
+			
+		}else{
+			if(vec[i]==1 && band){
+				mat[0][i]=' ';
+				mat[1][i]='*';
+				band=false;
+			}else if(vec[i]==1 && !band){
+				mat[0][i]='*';
+				mat[1][i]=' ';
+				band=true;
+			}else if(vec[i]==0 && !band){
+				mat[0][i]=' ';
+				mat[1][i]='*';
+				band=false;
+			}else if(vec[i]==0 && band){
+				mat[0][i]='*';
+				mat[1][i]=' ';
+				band=true;
+			}
+		}	
+	}
+	
+	tablero1(mat,vec);
+	
+}
+
 void bipolar_AMI(){
 	bool band=true;
 	int vec[12];
@@ -134,6 +175,67 @@ void bipolar_AMI(){
 	
 }
 
+void pseudoternario(){
+	int vec[12];
+	bool band=true;
+	char **mat=(char**)calloc(2,sizeof(char));
+	for(int i=0;i<3;i++){
+		mat[i]=(char*)calloc(12,sizeof(char));	
+	}
+	
+	llenarvec(vec);
+	
+	for(int i=0; i<12; i++){
+		if(vec[i]==0){
+			if(band){
+				mat[0][i]='*';
+				mat[1][i]=' ';
+				mat[2][i]=' ';
+				band=false;
+			}else{
+				mat[0][i]=' ';
+				mat[1][i]=' ';
+				mat[2][i]='*';
+				band=true;
+			}
+		}else{
+			mat[0][i]=' ';
+			mat[1][i]='*';
+			mat[2][i]=' ';
+		}
+	}
+	
+	tablero2(mat,vec);
+	
+}
+
+
+void manchester(){
+	int vec[12];
+	char **mat;
+	mat=(char**)calloc(2,sizeof(char));
+	for(int i=0;i<2;i++){
+		
+		mat[i]=(char*)calloc(12,sizeof(char));
+		
+	}
+	
+	llenarvec(vec);
+	
+	for(int i=0; i<12; i++){
+		if(vec[i]==1){
+			mat[0][i]='*';
+			mat[1][i]=' ';
+		}else{
+			mat[0][i]=' ';
+			mat[1][i]='*';
+		}
+	}
+	
+	tablero1(mat,vec);
+	
+}
+
 void menu(){
 	
 	int op;
@@ -167,16 +269,20 @@ void menu(){
 				no_retorno_cero();
 				break;
 			case 2:
-			
+				cout<<right<<setw(85)<<"Codificacion no retorno a cero invertido (NRZ-I)"<<endl<<endl;
+				no_retorno_cero_invertido();
 				break;
 			case 3:
 				cout<<right<<setw(70)<<"Codificacion Bipolar AMI"<<endl<<endl;
 				bipolar_AMI();
 				break;
 			case 4:
-			
+				cout<<right<<setw(75)<<"Codificacion Pseudoternario"<<endl<<endl;
+				pseudoternario();
 				break;
 			case 5:
+				cout<<right<<setw(75)<<"Codificacion Manchester"<<endl<<endl;
+				manchester();
 				break;
 			case 6:
 				
@@ -207,10 +313,7 @@ int main(){
 	srand(time(NULL));
 	//inicio del program
     menu();
-	
-//	bipolar_AMI();
-	//cout<<endl<<endl;
-	//tablero2();
+    
 	cout<<endl<<endl;
 	system("pause");
 	return 0;
