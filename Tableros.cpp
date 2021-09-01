@@ -236,6 +236,45 @@ void manchester(){
 	
 }
 
+void codigo_diferencial(){
+	
+	int comienzo=0;
+	
+	bool band=true;
+	int vec[12];
+	char **mat;
+	mat=(char**)calloc(3,sizeof(char));
+	for(int i=0;i<3;i++){
+		
+		mat[i]=(char*)calloc(12,sizeof(char));
+		
+	}
+	llenarvec(vec);
+	comienzo=0+rand()%(1-0+1);
+	cout<<right<<setw(40)<<"Comienzo con un "<<comienzo<<endl;
+	cout<<right<<setw(42)<<"Se lee primero el "<<(char)217<<" o el "<<(char)191<<" y despues la "<<(char)26<<endl;
+	for(int i=0;i<12;i++){
+		if((comienzo==0 && vec[i]==0) || (comienzo==1 && vec[i]==1)){
+			
+			mat[0][i]=191;
+			mat[1][i]=26;
+			
+			comienzo=0;
+		}else if((comienzo==0 && vec[i]==1) || (comienzo==1 && vec[i]==0)){
+			
+			mat[0][i]=26;
+			mat[1][i]=217;
+			
+			comienzo=1;
+		}
+	
+		
+	}
+	tablero1(mat,vec);
+	
+	
+}
+
 void menu(){
 	
 	int op;
@@ -285,7 +324,8 @@ void menu(){
 				manchester();
 				break;
 			case 6:
-				
+				cout<<right<<setw(75)<<"Codificacion Codigo diferencial"<<endl<<endl;
+				codigo_diferencial();
 				break;
 			case 7:
 				cout<<"Saliendo..."<<endl;
