@@ -5,7 +5,7 @@
 #include<iomanip>
 using namespace std;
 
-
+HANDLE color=GetStdHandle(STD_OUTPUT_HANDLE);
 
 void llenarvec(int *vec){
 	
@@ -23,7 +23,7 @@ void llenarvec(int *vec){
 void tablero1(char **mat,int *vec){
 	int i=0,j=0;
 
-	
+	SetConsoleTextAttribute(color,10);
 	cout<<"\t\t\t______________________________________________________________________________\n";
 	cout<<"\t\t\t|     |     |     |     |     |     |     |     |     |     |     |     |     |\n";
 	cout<<"\t\t\t|     |  "<<vec[0]<<"  |  "<<vec[1]<<"  |  "<<vec[2]<<"  |  "<<vec[3]<<"  |  "<<vec[4]<<"  |  "<<vec[5]<<"  |  "<<vec[6]<<"  |  "<<vec[7]<<"  |  "<<vec[8]<<"  |  "<<vec[9]<<"  |  "<<vec[10]<<"  |  "<<vec[11]<<"  |\n";
@@ -39,7 +39,7 @@ void tablero1(char **mat,int *vec){
 void tablero2(char **mat,int *vec){
 	int i=0,j=0;
 	  
-
+	SetConsoleTextAttribute(color,11);
 	cout<<"\t\t\t______________________________________________________________________________\n";
 	cout<<"\t\t\t|     |     |     |     |     |     |     |     |     |     |     |     |     |\n";
 	cout<<"\t\t\t|     |  "<<vec[0]<<"  |  "<<vec[1]<<"  |  "<<vec[2]<<"  |  "<<vec[3]<<"  |  "<<vec[4]<<"  |  "<<vec[5]<<"  |  "<<vec[6]<<"  |  "<<vec[7]<<"  |  "<<vec[8]<<"  |  "<<vec[9]<<"  |  "<<vec[10]<<"  |  "<<vec[11]<<"  |\n";
@@ -222,13 +222,15 @@ void manchester(){
 	
 	llenarvec(vec);
 	
+	SetConsoleTextAttribute(color,14);
+	cout<<right<<setw(42)<<"Se lee primero el "<<(char)217<<" o el "<<(char)191<<" y despues la "<<(char)26<<endl;
 	for(int i=0; i<12; i++){
 		if(vec[i]==1){
-			mat[0][i]='*';
-			mat[1][i]=' ';
+			mat[0][i]=26;
+			mat[1][i]=217;
 		}else{
-			mat[0][i]=' ';
-			mat[1][i]='*';
+			mat[0][i]=191;
+			mat[1][i]=26;
 		}
 	}
 	
@@ -251,6 +253,7 @@ void codigo_diferencial(){
 	}
 	llenarvec(vec);
 	comienzo=0+rand()%(1-0+1);
+	SetConsoleTextAttribute(color,14);
 	cout<<right<<setw(40)<<"Comienzo con un "<<comienzo<<endl;
 	cout<<right<<setw(42)<<"Se lee primero el "<<(char)217<<" o el "<<(char)191<<" y despues la "<<(char)26<<endl;
 	for(int i=0;i<12;i++){
@@ -282,9 +285,11 @@ void menu(){
 	
 	
 	do{
+		SetConsoleTextAttribute(color,10);
 		system("cls");
-		cout<<right<<setw(50)<<"MENU(Tipos de codificaciones)"<<endl;
+		cout<<right<<setw(50)<<"MENU(Tipos de codificaciones)"<<endl<<endl<<endl;
 		cout.width(48);cout.fill(' ');
+		SetConsoleTextAttribute(color,15);
 		cout<<"[1]No retorno a cero(NRC-L)"<<endl;
 		cout.width(58);cout.fill(' ');
 		cout<<"[2]No retorno a cero invertido(NRZ-I)"<<endl;
@@ -297,12 +302,15 @@ void menu(){
 		cout.width(42);cout.fill(' ');
 		cout<<"[6]Codigo diferencial"<<endl;
 		cout.width(29);cout.fill(' ');
-		cout<<"[7]Salir"<<endl;
+		cout<<"[7]Salir"<<endl<<endl;
+		SetConsoleTextAttribute(color,14);
 		cout.width(39);cout.fill(' ');
 		cout<<"Elige una opcion: ";
+		SetConsoleTextAttribute(color,12);
 		cin>>op;
 		system("cls");
 		switch(op){
+			SetConsoleTextAttribute(color,14);
 			case 1:
 				cout<<right<<setw(80)<<"Codificacion no retorno a cero(NRZ-L)"<<endl<<endl;
 				no_retorno_cero();
@@ -337,6 +345,7 @@ void menu(){
 			
 			
 		}
+		SetConsoleTextAttribute(color,15);
 		cout<<endl;
 		system("pause");
 		
